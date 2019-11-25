@@ -1,0 +1,21 @@
+module sk.fri.ktk {
+
+    requires javafx.base;
+    requires javafx.controls;
+    requires javafx.fxml;
+    requires javafx.web;
+    requires javafx.graphics;
+    requires com.google.common;
+    requires org.apache.commons.lang3;
+    requires java.logging;
+    requires com.fazecast.jSerialComm;
+    requires com.athaydes.logfx;
+    requires org.slf4j;
+
+    opens sk.fri.ktk to javafx.fxml;
+    exports sk.fri.ktk.elevator;
+    exports sk.fri.ktk.elevator.Packets;
+    exports sk.fri.ktk.elevator.GUI;
+    exports sk.fri.ktk;
+
+}
