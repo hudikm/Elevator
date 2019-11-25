@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <File name="File" fileName="~/SystemLog.txt">
+            <PatternLayout>
+                <pattern>%d %p %C{1.} [%t] %m%n</pattern>
+            </PatternLayout>
+        </File>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="SystemLog" level="All">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="ElevatorLog" level="All">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="error">
+            <AppenderRef ref="Console"/>
+        </Root>
+    </Loggers>
+</Configuration>
+        <!--<?xml version="1.0" encoding="UTF-8" ?>-->
+        <!--<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">-->
+
+        <!--<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">-->
+
+        <!--    <appender name="console" class="org.apache.log4j.ConsoleAppender">-->
+        <!--        <param name="Target" value="System.out"/>-->
+        <!--        <layout class="org.apache.log4j.PatternLayout">-->
+        <!--            <param name="ConversionPattern" value="%-5p %c{1} - %m%n"/>-->
+        <!--        </layout>-->
+        <!--    </appender>-->
+
+        <!--    <logger name="SystemLog">-->
+        <!--        <level value="DEBUG"/>-->
+
+        <!--    </logger>-->
+
+        <!--    <logger name="ElevatorLog">-->
+        <!--        <level value="DEBUG"/>-->
+        <!--    </logger>-->
+
+        <!--    <root>-->
+        <!--        <priority value ="WARN" />-->
+        <!--        <appender-ref ref="console" />-->
+        <!--    </root>-->
+
+        <!--</log4j:configuration>-->

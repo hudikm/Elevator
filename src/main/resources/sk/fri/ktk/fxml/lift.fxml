@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Arc?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane id="BorderPane"  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <!--<top>-->
+    <!--<MenuBar layoutY="2.0" fx:id="helpMenu">-->
+    <!--<menus>-->
+    <!--<Menu mnemonicParsing="false" text="Help">-->
+    <!--<items>-->
+    <!--<MenuItem mnemonicParsing="false" text="Show help"/>-->
+    <!--</items>-->
+    <!--</Menu>-->
+    <!--</menus>-->
+    <!--</MenuBar>-->
+    <!--</top>-->
+    <center>
+        <ScrollPane fx:id="scrollPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+            <content>
+                <AnchorPane style="-fx-background-color: #ecf2f9;" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="591.0" prefWidth="827.0">
+                    <children>
+                        <Button fx:id="LiftBP" layoutX="527.0" layoutY="172.0" mnemonicParsing="false" text="P" />
+                        <Button fx:id="LiftB1" layoutX="528.0" layoutY="138.0" mnemonicParsing="false" text="1" />
+                        <Button fx:id="LiftB2" layoutX="528.0" layoutY="104.0" mnemonicParsing="false" text="2" />
+                        <Button fx:id="LiftB3" layoutX="528.0" layoutY="70.0" mnemonicParsing="false" text="3" />
+                        <Button fx:id="LiftB4" layoutX="528.0" layoutY="36.0" mnemonicParsing="false" text="4" />
+
+                        <Circle fx:id="LiftLP" fill="WHITE" layoutX="506.0" layoutY="183.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="LiftL1" fill="WHITE" layoutX="506.0" layoutY="149.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="LiftL2" fill="WHITE" layoutX="506.0" layoutY="115.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="LiftL3" fill="#f8f8f8" layoutX="506.0" layoutY="81.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="LiftL4" fill="#fcfcfc" layoutX="506.0" layoutY="47.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+
+                        <Group fx:id="liftGrp" layoutX="1.0">
+                            <children>
+                                <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" layoutX="227.0" layoutY="74.0" stroke="BLACK" strokeType="INSIDE" width="75.0">
+                                    <fill>
+                                        <RadialGradient centerX="0.5" centerY="0.5" cycleMethod="REPEAT" focusAngle="-17.1" radius="1.0">
+                                            <stops>
+                                                <Stop color="#4ebf3f" />
+                                                <Stop color="#4ebf3f" offset="0.5440613026819923" />
+                                                <Stop color="WHITE" offset="1.0" />
+                                            </stops>
+                                        </RadialGradient>
+                                    </fill>
+                                </Rectangle>
+                                <ImageView fx:id="liftLock" fitHeight="30.0" fitWidth="33.0" layoutX="248.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/sk/fri/ktk/images/lock.png" />
+                                    </image>
+                                </ImageView>
+                                <ImageView fx:id="liftDoorL" fitHeight="75.0" fitWidth="75.0" layoutX="228.0" layoutY="74.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/sk/fri/ktk/images/door_.png" />
+                                    </image>
+
+                                </ImageView>
+                                <ImageView fx:id="liftDoorR" fitHeight="75" fitWidth="75" layoutX="265.0" layoutY="74.0" preserveRatio="true" scaleX="-1.0">
+                                    <image>
+                                        <Image url="@/sk/fri/ktk/images/door_.png" />
+                                    </image>
+                                </ImageView>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" layoutX="153.0" layoutY="74.0" stroke="#ECF2F9" strokeType="INSIDE" width="75.0">
+                           <fill>
+                              <RadialGradient centerX="0.5" centerY="0.5" cycleMethod="REPEAT" focusAngle="-17.1" radius="1.0">
+                                 <stops>
+                                    <Stop color="#ECF2F9" />
+
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                        </Rectangle>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" height="75.0" layoutX="301.0" layoutY="74.0" stroke="#ECF2F9" strokeType="INSIDE" width="75.0">
+                           <fill>
+                              <RadialGradient centerX="0.5" centerY="0.5" cycleMethod="REPEAT" focusAngle="-17.1" radius="1.0">
+                                 <stops>
+                                    <Stop color="#ECF2F9" />
+
+                                 </stops>
+                              </RadialGradient>
+                           </fill>
+                        </Rectangle>
+                                <Arc fill="DODGERBLUE" layoutX="301.0" layoutY="139.0" length="180.0" radiusX="10.0" radiusY="10.0" startAngle="-90.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                            </children>
+                        </Group>
+                        <Circle fx:id="motor" fill="DODGERBLUE" layoutX="266.0" layoutY="38.0" radius="13.0" stroke="BLACK" strokeType="INSIDE" />
+                        <ImageView fx:id="motorIcon" fitHeight="30.0" fitWidth="33.0" layoutX="295.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@/sk/fri/ktk/images/arrow.png" />
+                            </image>
+                        </ImageView>
+                        <Label layoutX="43.0" layoutY="33.0" prefHeight="16.0" prefWidth="173.0" text="Motor speed: " wrapText="true" />
+                        <Label fx:id="speedLbl" layoutX="137.0" layoutY="34.0" prefHeight="17.0" prefWidth="58.0" wrapText="true" />
+                        <Button fx:id="B4" layoutX="148.0" layoutY="78.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="48.0" text="4" />
+                        <Button fx:id="B3" layoutX="150.0" layoutY="182.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="45.0" text="3" />
+                        <Button fx:id="B2" layoutX="151.0" layoutY="272.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="42.0" text="2" />
+                        <Button fx:id="B1" layoutX="150.0" layoutY="365.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="44.0" text="1" />
+                        <Button fx:id="BP" layoutX="149.0" layoutY="454.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="47.0" text="P" />
+                        <Line endY="300.0" layoutX="220.0" layoutY="221.0" startY="-150.0" strokeWidth="5.0" />
+                        <Line endY="300.0" layoutX="320.0" layoutY="220.0" startY="-150.0" strokeWidth="5.0" />
+                        <Line endX="100.0" layoutX="221.0" layoutY="170.0" startX="-100.0" />
+                        <Line endX="100.0" layoutX="221.0" layoutY="255.0" startX="-100.0" />
+                        <Line endX="100.0" layoutX="220.0" layoutY="341.0" startX="-100.0" />
+                        <Line endX="100.0" layoutX="221.0" layoutY="426.0" startX="-100.0" />
+                        <Arc fx:id="sw4" fill="DODGERBLUE" layoutX="323.0" layoutY="158.0" length="180.0" radiusX="10.0" radiusY="10.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="sw3" fill="DODGERBLUE" layoutX="323.0" layoutY="243.0" length="180.0" radiusX="10.0" radiusY="10.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="sw2" fill="DODGERBLUE" layoutX="323.0" layoutY="329.0" length="180.0" radiusX="10.0" radiusY="10.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="sw1" fill="DODGERBLUE" layoutX="323.0" layoutY="414.0" length="180.0" radiusX="10.0" radiusY="10.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="swp" fill="DODGERBLUE" layoutX="323.0" layoutY="500.0" length="180.0" radiusX="10.0" radiusY="10.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Circle fx:id="LP" fill="WHITE" layoutX="131.0" layoutY="477.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="L3" fill="WHITE" layoutX="131.0" layoutY="207.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="L2" fill="WHITE" layoutX="130.0" layoutY="295.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="L1" fill="WHITE" layoutX="131.0" layoutY="388.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Circle fx:id="L4" fill="WHITE" layoutX="131.0" layoutY="104.0" radius="11.0" stroke="BLACK" strokeType="INSIDE" />
+                        <Label fx:id="LCD" layoutX="579.0" layoutY="34.0" prefHeight="162.0" prefWidth="172.0" text="↑↓ 1">
+                            <font>
+                                <Font size="63.0" />
+                            </font>
+                        </Label>
+                        <TextArea fx:id="terminal" editable="false" layoutX="414.0" layoutY="219.0" prefHeight="247.0" prefWidth="370.0" />
+                        <Label fx:id="toolTip" layoutX="14.0" layoutY="569.0" prefHeight="17.0" prefWidth="785.0" text="Label" />
+                        <Label layoutX="550.0" layoutY="515.0" text="Simulate noise on Line" />
+                        <Label layoutX="550.0" layoutY="538.0" text="Propability %" />
+                        <Slider fx:id="propSlider" blockIncrement="0.001" layoutX="644.0" layoutY="538.0" max="0.1" showTickLabels="true" showTickMarks="true" />
+                        <CheckBox fx:id="noiseChckBox" layoutX="706.0" layoutY="517.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="90.0" text="Enable" />
+                        <TextField fx:id="intFiled" editable="false" layoutX="689.0" layoutY="556.0" prefHeight="25.0" prefWidth="50.0" />
+                        <ComboBox fx:id="sendText" editable="true" layoutX="414.0" layoutY="486.0" prefHeight="25.0" prefWidth="368.0" />
+                        <Button fx:id="sendBtn" layoutX="414.0" layoutY="526.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="129.0" text="Send" />
+                        <Label fx:id="emergencyBreak" layoutX="372.0" layoutY="39.0" prefHeight="33.0" prefWidth="102.0" style="-fx-background-color: green;" text="Emergency break" textAlignment="CENTER" textFill="#070707" wrapText="true" />
+                        <Label fx:id="watchDogLbl" layoutX="372.0" layoutY="84.0" prefHeight="24.0" prefWidth="100.0" text="WatchDog" />
+                        <CheckBox fx:id="watchDogChck" layoutX="372.0" layoutY="107.0" mnemonicParsing="false" text="Enable" />
+                        <Label layoutX="583.0" layoutY="23.0" text="Serial port" />
+                        <Button fx:id="openPortBtn" layoutX="751.0" layoutY="55.0" mnemonicParsing="false" text="Open" />
+                        <Button fx:id="closePortBtn" disable="true" layoutX="687.0" layoutY="55.0" mnemonicParsing="false" text="Close" />
+                        <ComboBox fx:id="portCmb" editable="true" layoutX="664.0" layoutY="18.0" prefHeight="26.0" prefWidth="154.0" />
+                        <Label fx:id="cabinPosLbl" layoutX="43.0" layoutY="17.0" prefHeight="16.0" prefWidth="182.0" text="Cabine position:" />
+                        <Arc fx:id="swBottom" fill="DODGERBLUE" layoutX="315.0" layoutY="546.0" length="180.0" radiusX="10.0" radiusY="10.0" rotate="90.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+                        <Arc fx:id="swTop" fill="DODGERBLUE" layoutX="315.0" layoutY="66.0" length="180.0" radiusX="10.0" radiusY="10.0" rotate="-90.0" startAngle="90.0" stroke="BLACK" strokeType="INSIDE" type="ROUND" />
+
+
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+    </center>
+</BorderPane>
