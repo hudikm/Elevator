@@ -18,6 +18,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>13</maven.compiler.source>
         <maven.compiler.target>13</maven.compiler.target>
+        <jackson.version>2.10.0</jackson.version>
     </properties>
 
     <dependencies>
@@ -53,6 +54,41 @@
             <version>13</version>
             <classifier>linux</classifier>
         </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>13</version>
+            <classifier>linux</classifier>
+        </dependency>
+<!--Windows version-->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>13</version>
+            <classifier>win</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>13</version>
+            <classifier>win</classifier>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>13</version>
+            <classifier>win</classifier>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-web</artifactId>
+            <version>13</version>
+            <classifier>win</classifier>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.scream3r/jssc -->
         <dependency>
             <groupId>org.scream3r</groupId>
@@ -67,12 +103,7 @@
             <version>3.9</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.openjfx</groupId>
-            <artifactId>javafx-web</artifactId>
-            <version>13</version>
-            <classifier>linux</classifier>
-        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
         <dependency>
@@ -116,9 +147,19 @@
             <artifactId>logfx</artifactId>
             <version>0.9.1-snap</version>
 <!--            <type>jar</type>-->
-
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -180,6 +221,20 @@
                 <version>0.0.3</version>
                 <configuration>
                     <mainClass>sk.fri.ktk.NewMain</mainClass>
+                    <options>
+                        <option>
+                            --add-opens
+                        </option>
+                        <option>
+                            javafx.web/javafx.scene.web=ALL-UNNAMED
+                        </option>
+                        <option>
+                            --add-opens
+                        </option>
+                        <option>
+                            javafx.web/com.sun.webkit=ALL-UNNAMED
+                        </option>
+                    </options>
                 </configuration>
             </plugin>
             <plugin>

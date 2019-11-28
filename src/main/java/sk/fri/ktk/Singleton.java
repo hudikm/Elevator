@@ -10,67 +10,62 @@ import com.google.common.eventbus.EventBus;
 import sk.fri.ktk.elevator.Packets.SerialCommPacket;
 
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.logging.Logger;
 
 
 public class Singleton {
+
     public static final long SIMULATION_RESOLUTION = 50L;
-    private static final EventBus eventBus = new EventBus();
     public static final int DELAY_MS = 5;
-    public static final int NEW_BAUD_RATE = 230400;
-
-    private static Singleton ourInstance = new Singleton();
-
-    private boolean DEBUG_MODE = false;
-    public boolean isLINK_NOISE = true;
-    public double propabilityRate = 0.01;
-    public boolean emergencyBreak = false;
-    public boolean sensorSwitch = false;
-    public String lastOpenComport;
-
     public static final Logger logSystem = Logger.getLogger("SystemLog");
     public static final Logger logElevator = Logger.getLogger("ElevatorLog");
     public static final Logger serialLog = Logger.getLogger("SerialLog");
+    private static final EventBus eventBus = new EventBus();
+    private static final List<Integer> serialSpeedList = new ArrayList<>();
+
+    private static Singleton ourInstance = new Singleton();
+
+    static {
+        serialSpeedList.add(9600);
+        serialSpeedList.add(19200);
+        serialSpeedList.add(38400);
+        serialSpeedList.add(57600);
+        serialSpeedList.add(115200);
+        serialSpeedList.add(230400);
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
+
+    public Settings settings = new Settings();
+
+    private ByteBuffer RxBuffer = ByteBuffer.allocate(1000);
+    private Timer timerRx;
+    private ByteBuffer TxBuffer = ByteBuffer.allocate(1000);
+    private Timer timerTx;
 
     private Singleton() {
     }
 
-
-    private ByteBuffer RxBuffer = ByteBuffer.allocate(1000);
-    private Timer timerRx;
-
-    private ByteBuffer TxBuffer = ByteBuffer.allocate(1000);
-    private Timer timerTx;
-
-
-    private class SerialLogTaskRX extends TimerTask {
-        public void run() {
-            synchronized (RxBuffer) {
-                if (RxBuffer.position() == 0) return;
-                byte[] outBuff = new byte[RxBuffer.capacity() - RxBuffer.remaining()];
-                RxBuffer.rewind();
-                RxBuffer.get(outBuff);
-                RxBuffer.rewind();
-                Singleton.serialLog.info("Rx: " + SerialCommPacket.bytesToHex(outBuff));
-
-            }
-        }
+    public static List<Integer> getSerialSpeedList() {
+        return serialSpeedList;
     }
 
-    private class SerialLogTaskTX extends TimerTask {
-        public void run() {
-            synchronized (TxBuffer) {
-                if (TxBuffer.position() == 0) return;
-                byte[] outBuff = new byte[TxBuffer.capacity() - TxBuffer.remaining()];
-                TxBuffer.rewind();
-                TxBuffer.get(outBuff);
-                TxBuffer.rewind();
-                Singleton.serialLog.info("Tx: " + SerialCommPacket.bytesToHex(outBuff));
+    public static EventBus getEventBus() {
+        return eventBus;
+    }
 
-            }
-        }
+    public static Singleton getInstance() {
+        return ourInstance;
     }
 
     public void SerialLoggerRX(byte[] log) {
@@ -115,21 +110,40 @@ public class Singleton {
 
     }
 
-
-    public static EventBus getEventBus() {
-        return eventBus;
-    }
-
-    public static Singleton getInstance() {
-        return ourInstance;
-    }
-
     public boolean isDEBUG_MODE() {
-        return this.DEBUG_MODE;
+        return settings.isDEBUG_MODE();
     }
 
     public void setDEBUG_MODE(boolean DEBUG_MODE) {
-        this.DEBUG_MODE = DEBUG_MODE;
+        settings.setDEBUG_MODE(DEBUG_MODE);
+    }
+
+    private class SerialLogTaskRX extends TimerTask {
+        public void run() {
+            synchronized (RxBuffer) {
+                if (RxBuffer.position() == 0) return;
+                byte[] outBuff = new byte[RxBuffer.capacity() - RxBuffer.remaining()];
+                RxBuffer.rewind();
+                RxBuffer.get(outBuff);
+                RxBuffer.rewind();
+                Singleton.serialLog.info("Rx: " + SerialCommPacket.bytesToHex(outBuff));
+
+            }
+        }
+    }
+
+    private class SerialLogTaskTX extends TimerTask {
+        public void run() {
+            synchronized (TxBuffer) {
+                if (TxBuffer.position() == 0) return;
+                byte[] outBuff = new byte[TxBuffer.capacity() - TxBuffer.remaining()];
+                TxBuffer.rewind();
+                TxBuffer.get(outBuff);
+                TxBuffer.rewind();
+                Singleton.serialLog.info("Tx: " + SerialCommPacket.bytesToHex(outBuff));
+
+            }
+        }
     }
 }
 

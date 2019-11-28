@@ -26,7 +26,7 @@ public class Comunication implements SerialPortDataListener {
 
     public class SerialSender extends Thread {
         public static final int MAX_NUM_OF_RETRANSMISSION = 5;
-        public static final int ACK_RETRANSMIT_WAIT_TIME = 20;
+        public static final int ACK_RETRANSMIT_WAIT_TIME = 30;
         private Vector<SerialCommPacket> outQueue = new Vector();
         private Vector<Pair<SerialCommPacket, Date>> ackQueue = new Vector();
 
@@ -53,10 +53,10 @@ public class Comunication implements SerialPortDataListener {
 
                         // Link noise simulation
 
-                        if (Singleton.getInstance().isLINK_NOISE && !outputMessage.isAck()) {
+                        if (Singleton.getInstance().settings.isLINK_NOISE && !outputMessage.isAck()) {
                             for (int b = 0; b < serialData.length; b++) {
                                 boolean val;
-                                boolean bl = val = rand.nextInt((int) (1.0 / Singleton.getInstance().propabilityRate)) == 0;
+                                boolean bl = val = rand.nextInt((int) (1.0 / Singleton.getInstance().settings.propabilityRate)) == 0;
                                 if (val) {
                                     serialData[b] = (byte) (serialData[b] ^ (byte) rand.nextInt(254));
                                     Singleton.logElevator.warning("Protocol: Noise on TX line");
@@ -78,8 +78,6 @@ public class Comunication implements SerialPortDataListener {
                         else
                             Singleton.logElevator.warning("Tx: No Ack received. Packet was not delivered !: Num of attempts" + i + "/" + MAX_NUM_OF_RETRANSMISSION);
                     }
-
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -132,6 +130,7 @@ public class Comunication implements SerialPortDataListener {
 
     public Comunication(EventBus eventBus) {
         serialSender = new SerialSender("SenderThread");
+        serialSender.setPriority(Thread.MAX_PRIORITY);
         serialSender.start();
 
         this.eventBus = eventBus;
@@ -162,13 +161,13 @@ public class Comunication implements SerialPortDataListener {
 
         if (this.serialPort.openPort()) {
 
-            this.serialPort.setComPortParameters(Singleton.NEW_BAUD_RATE, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY);
+            this.serialPort.setComPortParameters(Singleton.getInstance().settings.NEW_BAUD_RATE, 8, SerialPort.ONE_STOP_BIT, SerialPort.NO_PARITY);
 
             serialSender.ackQueue.clear();
             serialSender.outQueue.clear();
 
             serialPort.addDataListener(this);
-            Singleton.logSystem.info("Port :" + com + " is open");
+            Singleton.logSystem.info("Port :" + com + " is open! Speed: "+ Singleton.getInstance().settings.NEW_BAUD_RATE +" [bits/s]");
 
             return true;
         } else {
@@ -227,9 +226,9 @@ public class Comunication implements SerialPortDataListener {
             for (byte c : receivedData) {
 
                 // Link noise simulation
-                if (Singleton.getInstance().isLINK_NOISE) {
+                if (Singleton.getInstance().settings.isLINK_NOISE) {
                     boolean val;
-                    boolean bl = val = this.rand.nextInt((int) (1.0 / Singleton.getInstance().propabilityRate)) == 0;
+                    boolean bl = val = this.rand.nextInt((int) (1.0 / Singleton.getInstance().settings.propabilityRate)) == 0;
                     if (val) {
                         c = (byte) (c ^ (byte) this.rand.nextInt(254));
                         Singleton.logElevator.warning("Protocol: Noise on RX line");

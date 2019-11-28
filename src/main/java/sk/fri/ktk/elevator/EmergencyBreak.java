@@ -16,11 +16,11 @@ import sk.fri.ktk.elevator.Packets.SerialCommPacket;
 public class EmergencyBreak
 extends Element {
     public boolean isEmergencyBreak() {
-        return Singleton.getInstance().emergencyBreak;
+        return Singleton.getInstance().settings.emergencyBreak;
     }
 
     public void setEmergencyBreak(boolean emergencyBreak) {
-        Singleton.getInstance().emergencyBreak = emergencyBreak;
+        Singleton.getInstance().settings.emergencyBreak = emergencyBreak;
     }
 
     public EmergencyBreak(EventBus eventBus, Element.UI ui, Integer address) {
@@ -40,6 +40,7 @@ extends Element {
                 case 0: {
                     this.setEmergencyBreak(false);
                     this.getUi().updateUI(this);
+                    break;
                 }
             }
         }

@@ -40,7 +40,7 @@ public class Motor
 
         @Override
         public void run() {
-            if (Singleton.getInstance().emergencyBreak) {
+            if (Singleton.getInstance().settings.emergencyBreak) {
                 Motor.this.currentState.setMaxSpeed(0);
             }
 
@@ -126,6 +126,7 @@ public class Motor
                 serialCommPacketSend.setSenderAddr(this.address);
                 serialCommPacketSend.setData(ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putShort((short) this.currentState.distance));
                 this.eventBus.post(serialCommPacketSend);
+                break;
             }
             case 4: { //SEND CURRENT MOTOR SPEED
                 SerialCommPacket serialCommPacketSend = new SerialCommPacket();
@@ -133,6 +134,7 @@ public class Motor
                 serialCommPacketSend.setSenderAddr(this.address);
                 serialCommPacketSend.setData(ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat((float) this.currentState.getCurrentSpeed()));
                 this.eventBus.post(serialCommPacketSend);
+                break;
             }
         }
     }

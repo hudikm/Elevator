@@ -102,7 +102,7 @@ implements Runnable {
         if (this.enabled) {
             if (!this.isClean) {
                 this.setFired(true);
-                Singleton.getInstance().emergencyBreak = true;
+                Singleton.getInstance().settings.emergencyBreak = true;
                 this.eventBus.post((Object)new EmergencyPaket());
                 this.getUi().updateUI(this);
             }

@@ -5,6 +5,9 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextArea?>
@@ -21,7 +24,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane id="BorderPane"  maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane id="BorderPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <!--<top>-->
     <!--<MenuBar layoutY="2.0" fx:id="helpMenu">-->
     <!--<menus>-->
@@ -36,7 +39,7 @@
     <center>
         <ScrollPane fx:id="scrollPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
             <content>
-                <AnchorPane style="-fx-background-color: #ecf2f9;" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="591.0" prefWidth="827.0">
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="591.0" prefWidth="827.0" style="-fx-background-color: #ecf2f9;">
                     <children>
                         <Button fx:id="LiftBP" layoutX="527.0" layoutY="172.0" mnemonicParsing="false" text="P" />
                         <Button fx:id="LiftB1" layoutX="528.0" layoutY="138.0" mnemonicParsing="false" text="1" />
@@ -162,4 +165,14 @@
             </content>
         </ScrollPane>
     </center>
+   <top>
+      <MenuBar fx:id="MenuBar" BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Unspecified Menu">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+         </menus></MenuBar>
+   </top>
 </BorderPane>

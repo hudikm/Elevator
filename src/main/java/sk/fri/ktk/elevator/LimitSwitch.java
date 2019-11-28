@@ -22,10 +22,12 @@ extends Element {
     private double position;
     public int state = 0;
     private int lastState = 0;
+    private boolean bottomOrTopSwitch;
 
-    public LimitSwitch(EventBus eventBus, Element.UI ui, Integer address, double position) {
+    public LimitSwitch(EventBus eventBus, UI ui, Integer address, double position, boolean bottomOrTopSwitch) {
         super(eventBus, ui, address);
         this.position = position;
+        this.bottomOrTopSwitch = bottomOrTopSwitch;
         this.setSuperClassName(this.getClass().getSimpleName());
     }
 
@@ -53,24 +55,25 @@ extends Element {
 
         if (delta < 0.055 && delta > 0.005) {
             this.state = 1;
-            Singleton.getInstance().sensorSwitch = false;
+            Singleton.getInstance().settings.sensorSwitch = false;
         } else if (delta < 0.005) {
             this.state = 2;
-            Singleton.getInstance().sensorSwitch = true;
+            Singleton.getInstance().settings.sensorSwitch = true;
         } else {
             this.state = 0;
-            Singleton.getInstance().sensorSwitch = false;
+            Singleton.getInstance().settings.sensorSwitch = false;
         }
 
         //Send info about switch change
         if (this.state != this.lastState) {
             this.lastState = this.state;
-
-            SerialCommPacket serialCommPacket = new SerialCommPacket();
-            serialCommPacket.setAddress(SerialCommPacket.SERIAL_LINK);
-            serialCommPacket.setSenderAddr(this.address);
-            serialCommPacket.setData(ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN).put((byte)this.state));
-            this.eventBus.post(serialCommPacket);
+            if(!bottomOrTopSwitch || state == 2) {
+                SerialCommPacket serialCommPacket = new SerialCommPacket();
+                serialCommPacket.setAddress(SerialCommPacket.SERIAL_LINK);
+                serialCommPacket.setSenderAddr(this.address);
+                serialCommPacket.setData(ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN).put((byte) this.state));
+                this.eventBus.post(serialCommPacket);
+            }
         }
         this.getUi().updateUI(this);
     }
