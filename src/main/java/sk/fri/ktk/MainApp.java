@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.FileHandler;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
@@ -76,11 +77,15 @@ public class MainApp extends Application {
         SimpleFormatter formatter = new SimpleFormatter();
 
         fileHandlerElev.setFormatter(formatter);
+        fileHandlerElev.setLevel(Level.FINE);
         fileHandlerSys.setFormatter(formatter);
+        fileHandlerSys.setLevel(Level.FINE);
         serialHandlerSerial.setFormatter(formatter);
 
         Singleton.logSystem.addHandler(fileHandlerSys);
         Singleton.logElevator.addHandler(fileHandlerElev);
+        Singleton.logElevator.setLevel(Level.FINE);
+
 
         Singleton.serialLog.setUseParentHandlers(false);
         Singleton.serialLog.addHandler(serialHandlerSerial);

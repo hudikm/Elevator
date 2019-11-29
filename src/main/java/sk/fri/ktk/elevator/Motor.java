@@ -102,12 +102,13 @@ public class Motor
         switch (serialCommPacket.getData().get()) {
             case 1: { //STOP
                 this.currentState.setMaxSpeed(0);
-                Singleton.logElevator.info("Motor stop");
+                Singleton.logElevator.fine("Motor: stop");
                 break;
             }
             case 2: { //NEW SPEED
                 int anInt = serialCommPacket.getData().getInt();
                 if (Math.abs((double) Math.signum(anInt) - Math.signum(this.currentState.getCurrentSpeed())) == 2.0) {
+                    Singleton.logElevator.severe("Motor: Revers of motor direction while cabin is still moving!");
                     anInt = 0;
                 }
                 if (anInt > 100) {
@@ -116,7 +117,7 @@ public class Motor
                 if (anInt < -100) {
                     anInt = -100;
                 }
-                Singleton.logElevator.info("Motor set new speed: " + anInt);
+                Singleton.logElevator.fine("Motor: set new speed: " + anInt);
                 this.currentState.setMaxSpeed(anInt);
                 break;
             }
@@ -126,6 +127,7 @@ public class Motor
                 serialCommPacketSend.setSenderAddr(this.address);
                 serialCommPacketSend.setData(ByteBuffer.allocate(2).order(ByteOrder.LITTLE_ENDIAN).putShort((short) this.currentState.distance));
                 this.eventBus.post(serialCommPacketSend);
+                Singleton.logElevator.fine("Motor: Cabin position(distance): "+this.currentState.distance);
                 break;
             }
             case 4: { //SEND CURRENT MOTOR SPEED
@@ -134,7 +136,10 @@ public class Motor
                 serialCommPacketSend.setSenderAddr(this.address);
                 serialCommPacketSend.setData(ByteBuffer.allocate(4).order(ByteOrder.LITTLE_ENDIAN).putFloat((float) this.currentState.getCurrentSpeed()));
                 this.eventBus.post(serialCommPacketSend);
+                Singleton.logElevator.fine("Motor: speed of motor: "+this.currentState.getCurrentSpeed());
                 break;
+            } default: {
+                Singleton.logElevator.warning("Motor: wrong command(data)!");
             }
         }
     }

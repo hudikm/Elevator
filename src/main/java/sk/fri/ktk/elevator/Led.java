@@ -1,16 +1,17 @@
 /*
  * Decompiled with CFR 0.145.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.eventbus.EventBus
  */
 package sk.fri.ktk.elevator;
 
 import com.google.common.eventbus.EventBus;
+import sk.fri.ktk.Singleton;
 import sk.fri.ktk.elevator.Packets.SerialCommPacket;
 
 public class Led
-extends Element {
+        extends Element {
     private Boolean value = false;
 
     public Boolean getValue() {
@@ -31,7 +32,10 @@ extends Element {
         if (serialCommPacket.getData() != null) {
             serialCommPacket.getData().rewind();
             this.value = serialCommPacket.getData().get() == 0 ? Boolean.valueOf(false) : Boolean.valueOf(true);
+            Singleton.logElevator.fine("Led(" + Integer.toHexString(this.getAddress()) + "):" + this.value);
             this.getUi().updateUI(this);
+        } else {
+            Singleton.logElevator.warning("Led(" + Integer.toHexString(this.getAddress()) + "): Empty data!");
         }
     }
 

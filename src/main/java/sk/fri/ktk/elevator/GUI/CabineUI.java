@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
+import sk.fri.ktk.Singleton;
 import sk.fri.ktk.elevator.Cabin;
 import sk.fri.ktk.elevator.Element;
 
@@ -94,6 +95,7 @@ public class CabineUI extends UI implements Element.UI {
                 timelineCloseDoorR.play();
                 timelineCloseDoorL.setOnFinished(event -> {
                     cabin.setDoorClosed(true);
+                    Singleton.logElevator.fine("Cabin door closed!");
                 });
             } else {
                 this.lock.setImage(this.unlockImg);
@@ -102,6 +104,7 @@ public class CabineUI extends UI implements Element.UI {
                 timelineOpenDoorR.play();
                 timelineOpenDoorL.setOnFinished(event -> {
                     cabin.setDoorClosed(false);
+                    Singleton.logElevator.fine("Cabin door opened!");
                 });
             }
 

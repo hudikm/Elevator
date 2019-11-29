@@ -56,6 +56,10 @@ public class Singleton {
     private Singleton() {
     }
 
+    public long getRxTimeOut(){
+        return 2 + (long)((8000.0/(float)settings.NEW_BAUD_RATE) * 10.0);
+    }
+
     public static List<Integer> getSerialSpeedList() {
         return serialSpeedList;
     }
@@ -84,9 +88,13 @@ public class Singleton {
         timerRx = new Timer("Timer");
         synchronized (RxBuffer) {
             RxBuffer.put(log);
-            timerRx.schedule(new SerialLogTaskRX(), DELAY_MS);
+            timerRx.schedule(new SerialLogTaskRX(), getDelayMs());
         }
 
+    }
+
+    private int getDelayMs() {
+        return 1 + (int)((8000.0/(float)settings.NEW_BAUD_RATE) * 10.0);
     }
 
     public void SerialLoggerTX(byte[] log) {
@@ -105,7 +113,7 @@ public class Singleton {
         timerTx = new Timer("TimerT");
         synchronized (TxBuffer) {
             TxBuffer.put(log);
-            timerTx.schedule(new SerialLogTaskTX(), 50);
+            timerTx.schedule(new SerialLogTaskTX(), getDelayMs());
         }
 
     }

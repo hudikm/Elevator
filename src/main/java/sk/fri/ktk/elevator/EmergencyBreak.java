@@ -33,14 +33,19 @@ extends Element {
             serialCommPacket.getData().rewind();
             switch (serialCommPacket.getData().get()) {
                 case 1: {
+                    Singleton.logElevator.fine("Emergency brake: On");
                     this.setEmergencyBreak(true);
                     this.getUi().updateUI(this);
                     break;
                 }
                 case 0: {
+                    Singleton.logElevator.fine("Emergency brake: Off");
                     this.setEmergencyBreak(false);
                     this.getUi().updateUI(this);
                     break;
+                }
+                default:{
+                    Singleton.logElevator.warning("Emergency brake: Wrong data!");
                 }
             }
         }

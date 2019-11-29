@@ -53,12 +53,18 @@ public class Cabin extends Element {
             serialCommPacket.getData().rewind();
             this.isDoorLocked = serialCommPacket.getData().get() == 0 ? (byte) 0 : 1;
             this.getUi().updateUI(this);
+            if (this.isDoorLocked == 0)
+                Singleton.logElevator.fine("Cabin door: Opening");
+            else
+                Singleton.logElevator.fine("Cabin door: Closing");
         } else {
             SerialCommPacket serialCommPacket2 = new SerialCommPacket();
             serialCommPacket2.setAddress(serialCommPacket.getSenderAddr());
             serialCommPacket2.setSenderAddr(this.address);
             serialCommPacket2.setData(ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN)/*.put(this.isDoorLocked)*/.put((byte) (isDoorClosed() ? 1 : 0)));
             this.eventBus.post((Object) serialCommPacket2);
+
+            Singleton.logElevator.fine("Cabin door: Is "+ (isDoorClosed()?"closed":"opened"));
         }
     }
 
@@ -89,7 +95,7 @@ public class Cabin extends Element {
         }
         this.getUi().updateUI(this);
         this.eventBus.post(new CabineMovePacket(this, doorClosed));
-        if(!isDoorClosed()){
+        if (!isDoorClosed()) {
             Singleton.logElevator.severe("Elevator is moving but doors are not closed!");
         }
     }

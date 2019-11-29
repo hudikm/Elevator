@@ -7,6 +7,7 @@
 package sk.fri.ktk.elevator;
 
 import com.google.common.eventbus.EventBus;
+import sk.fri.ktk.Singleton;
 import sk.fri.ktk.elevator.Packets.SerialCommPacket;
 
 import java.nio.ByteBuffer;
@@ -19,6 +20,7 @@ extends Element {
         serialCommPacket.setAddress(SerialCommPacket.SERIAL_LINK);
         serialCommPacket.setSenderAddr(this.address);
         this.eventBus.post((Object) serialCommPacket);
+        Singleton.logElevator.fine("Button("+Integer.toHexString(this.getAddress())+"): pressed" );
     }
 
     public ButtonOnFloor(EventBus eventBus, Element.UI ui, Integer address) {

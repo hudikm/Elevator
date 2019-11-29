@@ -7,6 +7,7 @@
 package sk.fri.ktk.elevator;
 
 import com.google.common.eventbus.EventBus;
+import sk.fri.ktk.Singleton;
 import sk.fri.ktk.elevator.Packets.SerialCommPacket;
 
 import java.nio.ByteBuffer;
@@ -30,6 +31,7 @@ extends Element {
         serialCommPacketSend.setSenderAddr(this.address);
         serialCommPacketSend.setData(ByteBuffer.allocate(text.length()).order(ByteOrder.LITTLE_ENDIAN).put(text.getBytes()));
         this.eventBus.post((Object) serialCommPacketSend);
+        Singleton.logElevator.fine("Terminal send data: "+ text.getBytes());
     }
 
     @Override
@@ -37,6 +39,7 @@ extends Element {
         if (serialCommPacket.getData() != null) {
             this.newData = new String(serialCommPacket.getData().array());
             this.ui.updateUI(this);
+            Singleton.logElevator.fine("Terminal receive data: "+ newData);
         }
     }
 

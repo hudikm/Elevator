@@ -38,6 +38,7 @@ extends Element {
         serialCommPacket2.setSenderAddr(this.address);
         serialCommPacket2.setData(ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN).put((byte)this.state));
         this.eventBus.post((Object) serialCommPacket2);
+        Singleton.logElevator.fine("Limit switch(" + Integer.toHexString(this.getAddress()) + "): State:" + this.state);
     }
 
     @Override
@@ -73,6 +74,7 @@ extends Element {
                 serialCommPacket.setSenderAddr(this.address);
                 serialCommPacket.setData(ByteBuffer.allocate(1).order(ByteOrder.LITTLE_ENDIAN).put((byte) this.state));
                 this.eventBus.post(serialCommPacket);
+                Singleton.logElevator.fine("Limit switch(" + Integer.toHexString(this.getAddress()) + "): State:" + this.state);
             }
         }
         this.getUi().updateUI(this);

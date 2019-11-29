@@ -7,6 +7,7 @@
 package sk.fri.ktk.elevator;
 
 import com.google.common.eventbus.EventBus;
+import sk.fri.ktk.Singleton;
 import sk.fri.ktk.elevator.Packets.SerialCommPacket;
 
 public class LCD
@@ -35,6 +36,9 @@ extends Element {
             this.lcdText = new String(serialCommPacket.getData().array());
             this.lcdText = this.lcdText.substring(1, this.lcdText.length());
             this.getUi().updateUI(this);
+            Singleton.logElevator.fine("LCD: "+ this.lcdText);
+        }else{
+            Singleton.logElevator.warning("LCD: Empty Data");
         }
     }
 

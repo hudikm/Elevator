@@ -54,7 +54,7 @@ implements Runnable {
     }
 
     private void startWatchdog() {
-        this.scheduledFuture = this.scheduler.scheduleAtFixedRate(this, 0L, 1500L, TimeUnit.MILLISECONDS);
+        this.scheduledFuture = this.scheduler.scheduleAtFixedRate(this, 0L, 2000L, TimeUnit.MILLISECONDS);
     }
 
     private void stopWatchDog() {
@@ -81,9 +81,11 @@ implements Runnable {
                     this.setEnabled(false);
                     this.setEnabled(true);
                     this.getUi().updateUI(this);
+                    Singleton.logElevator.fine("Watchdog: restart" );
                 }
             } else {
                 this.setClean(true);
+                Singleton.logElevator.fine("Watchdog: reset timer!");
             }
         }
     }
@@ -94,7 +96,7 @@ implements Runnable {
 
     @Override
     public String getTooltipText() {
-        return "<h1><strong>WATCHDOG TIMER</strong></h1>\n<h2>Address: 0x" + Integer.toHexString(this.getAddress()) + "&nbsp;</h2>\n<h4>Description:</h4>\n<p>Watchdog timer is an electronic timer that is used to detect and recover from computer malfunctions. During normal operation, the computer regularly resets the watchdog timer to prevent it from elapsing, or \"timing out\".  If, due to a hardware fault or program error, the computer fails to reset the watchdog, the timer will elapse and generate a timeout signal. The timeout signal is used to initiate corrective action or actions. The corrective actions typically include placing the computer system in a safe state and restoring normal system operation. </p>\n<h4>TimeOut time:</h4>\n<p>" + 1500L + " ms</p>\n<p>Commands:</p>\n<table>\n<tbody>\n<tr>\n<td style=\"text-align: center;\"><em><strong>Command&nbsp;</strong></em></td>\n<td style=\"text-align: center;\"><em><strong>Description&nbsp;</strong></em></td>\n<td style=\"text-align: center;\"><em><strong>Data In&nbsp;</strong></em></td>\n<td style=\"text-align: center;\"><em><strong>Data Out&nbsp;(response)</strong></em></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\"> 0x01</td>\n<td style=\"text-align: center;\">Reset watchdog timer after \"timeing out\"(restore watchdog timer to initial state))</td>\n<td style=\"text-align: center;\">Byte </td>\n</tr>\n<tr>\n<td style=\"text-align: center;\"> else </td>\n<td style=\"text-align: center;\"> Regularly resets the watchdog timer to prevent it from elapsing. </td>\n<td style=\"text-align: center;\">Byte </td>\n</tr>\n</tbody>\n</table>";
+        return "<h1><strong>WATCHDOG TIMER</strong></h1>\n<h2>Address: 0x" + Integer.toHexString(this.getAddress()) + "&nbsp;</h2>\n<h4>Description:</h4>\n<p>Watchdog timer is an electronic timer that is used to detect and recover from computer malfunctions. During normal operation, the computer regularly resets the watchdog timer to prevent it from elapsing, or \"timing out\".  If, due to a hardware fault or program error, the computer fails to reset the watchdog, the timer will elapse and generate a timeout signal. The timeout signal is used to initiate corrective action or actions. The corrective actions typically include placing the computer system in a safe state and restoring normal system operation. </p>\n<h4>TimeOut time:</h4>\n<p>" + 2000L + " ms</p>\n<p>Commands:</p>\n<table>\n<tbody>\n<tr>\n<td style=\"text-align: center;\"><em><strong>Command&nbsp;</strong></em></td>\n<td style=\"text-align: center;\"><em><strong>Description&nbsp;</strong></em></td>\n<td style=\"text-align: center;\"><em><strong>Data In&nbsp;</strong></em></td>\n<td style=\"text-align: center;\"><em><strong>Data Out&nbsp;(response)</strong></em></td>\n</tr>\n<tr>\n<td style=\"text-align: center;\"> 0x01</td>\n<td style=\"text-align: center;\">Reset watchdog timer after \"timeing out\"(restore watchdog timer to initial state))</td>\n<td style=\"text-align: center;\">Byte </td>\n</tr>\n<tr>\n<td style=\"text-align: center;\"> else </td>\n<td style=\"text-align: center;\"> Regularly resets the watchdog timer to prevent it from elapsing. </td>\n<td style=\"text-align: center;\">Byte </td>\n</tr>\n</tbody>\n</table>";
     }
 
     @Override

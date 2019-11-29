@@ -13,6 +13,7 @@ import sk.fri.ktk.elevator.Packets.SerialCommPacket;
 
 public class Protocol {
 
+    public static final long RECEIVE_BYTE_TIMEOUT = 2L; //bolo 25
     byte crc = 0;
     private Date startTime;
     private static final byte startByte = -96;
@@ -58,9 +59,9 @@ public class Protocol {
     public ReturnValue newChar(byte chr) {
         long diff;
         Date currentDate = new Date();
-        if (this.startTime != null && (diff = currentDate.getTime() - this.startTime.getTime()) >= 25L && this.state != STATE.START) {
+        if (this.startTime != null && (diff = currentDate.getTime() - this.startTime.getTime()) >= getReceiveByteTimeout() && this.state != STATE.START) {
             this.state = STATE.START;
-            Singleton.logElevator.warning(MessageFormat.format("Protocol: Timout {0} ms -> The board did not respond too long! ", diff));
+            Singleton.logElevator.warning(MessageFormat.format("Protocol restart: Timout {0} ms -> The board did not send another character in time!", diff));
         }
         switch (this.state) {
             case START: {
@@ -119,6 +120,10 @@ public class Protocol {
             }
         }
         return new ReturnValue(true, STATE.START);
+    }
+
+    private long getReceiveByteTimeout() {
+        return  Singleton.getInstance().getRxTimeOut();
     }
 
     static enum STATE {

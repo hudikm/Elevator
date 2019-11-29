@@ -25,8 +25,10 @@ public class Comunication implements SerialPortDataListener {
     final SerialSender serialSender;
 
     public class SerialSender extends Thread {
-        public static final int MAX_NUM_OF_RETRANSMISSION = 5;
-        public static final int ACK_RETRANSMIT_WAIT_TIME = 30;
+
+        public static final int MAX_NUM_OF_RETRANSMISSION = 8;
+        public static final int ACK_RETRANSMIT_WAIT_TIME = 5; //30ms
+
         private Vector<SerialCommPacket> outQueue = new Vector();
         private Vector<Pair<SerialCommPacket, Date>> ackQueue = new Vector();
 
@@ -71,7 +73,7 @@ public class Comunication implements SerialPortDataListener {
                         if (outputMessage.isAck())
                             break; // If output packet is ack, we are not waiting for ack replay from MCU
 
-                        SerialCommPacket ackMessage = getAckMessage(ACK_RETRANSMIT_WAIT_TIME);//20ms wait time
+                        SerialCommPacket ackMessage = getAckMessage(ACK_RETRANSMIT_WAIT_TIME);// wait time
                         if (ackMessage != null) break;
                         if (i < MAX_NUM_OF_RETRANSMISSION)
                             Singleton.logElevator.warning("Tx: No Ack received resending: " + i + "/" + MAX_NUM_OF_RETRANSMISSION);
@@ -167,7 +169,7 @@ public class Comunication implements SerialPortDataListener {
             serialSender.outQueue.clear();
 
             serialPort.addDataListener(this);
-            Singleton.logSystem.info("Port :" + com + " is open! Speed: "+ Singleton.getInstance().settings.NEW_BAUD_RATE +" [bits/s]");
+            Singleton.logSystem.info("Port :" + com + " is open! Speed: "+ Singleton.getInstance().settings.NEW_BAUD_RATE +" [bits/s] RxTimeout[mS]: "+Singleton.getInstance().getRxTimeOut());
 
             return true;
         } else {
@@ -243,7 +245,12 @@ public class Comunication implements SerialPortDataListener {
                     continue;
                 }
 
-                Singleton.logElevator.info("Rx: " + this.protocol.getSerialCommPacket().toString());
+                if(!protocol.getSerialCommPacket().isAck()) {
+                    Singleton.logElevator.info("Rx: " + this.protocol.getSerialCommPacket().toString());
+                }else{
+                    Singleton.logElevator.info("Rx: ACK. addr: " + Integer.toHexString(this.protocol.getSerialCommPacket().getAddress()));
+
+                }
 
                 if (!this.protocol.getSerialCommPacket().isAck()) {
                     SerialCommPacket ackSerialCommPacket = new AckPacket(this.protocol.getSerialCommPacket().getAddress());
