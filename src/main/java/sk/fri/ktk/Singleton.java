@@ -24,6 +24,7 @@ public class Singleton {
     public static final Logger logSystem = Logger.getLogger("SystemLog");
     public static final Logger logElevator = Logger.getLogger("ElevatorLog");
     public static final Logger serialLog = Logger.getLogger("SerialLog");
+    public static final int ACK_RETRANSMIT_WAIT_TIME = 5; //30ms
     private static final EventBus eventBus = new EventBus();
     private static final List<Integer> serialSpeedList = new ArrayList<>();
 
@@ -38,26 +39,12 @@ public class Singleton {
         serialSpeedList.add(230400);
     }
 
-    public Settings getSettings() {
-        return settings;
-    }
-
-    public void setSettings(Settings settings) {
-        this.settings = settings;
-    }
-
     public Settings settings = new Settings();
-
     private ByteBuffer RxBuffer = ByteBuffer.allocate(1000);
     private Timer timerRx;
     private ByteBuffer TxBuffer = ByteBuffer.allocate(1000);
     private Timer timerTx;
-
     private Singleton() {
-    }
-
-    public long getRxTimeOut(){
-        return 2 + (long)((8000.0/(float)settings.NEW_BAUD_RATE) * 10.0);
     }
 
     public static List<Integer> getSerialSpeedList() {
@@ -70,6 +57,22 @@ public class Singleton {
 
     public static Singleton getInstance() {
         return ourInstance;
+    }
+
+    public Settings getSettings() {
+        return settings;
+    }
+
+    public void setSettings(Settings settings) {
+        this.settings = settings;
+    }
+
+    public long getRxTimeOut(){
+        return 2 + (long)((8000.0/(float)settings.NEW_BAUD_RATE) * 10.0);
+    }
+
+    private int getDelayMs() { //POuzite pri SerialLogery
+        return 1 + (int)((8000.0/(float)settings.NEW_BAUD_RATE) * 10.0);
     }
 
     public void SerialLoggerRX(byte[] log) {
@@ -93,9 +96,7 @@ public class Singleton {
 
     }
 
-    private int getDelayMs() {
-        return 1 + (int)((8000.0/(float)settings.NEW_BAUD_RATE) * 10.0);
-    }
+
 
     public void SerialLoggerTX(byte[] log) {
         SerialLogTaskRX serialLogTaskRX = null;

@@ -27,7 +27,6 @@ public class Comunication implements SerialPortDataListener {
     public class SerialSender extends Thread {
 
         public static final int MAX_NUM_OF_RETRANSMISSION = 8;
-        public static final int ACK_RETRANSMIT_WAIT_TIME = 5; //30ms
 
         private Vector<SerialCommPacket> outQueue = new Vector();
         private Vector<Pair<SerialCommPacket, Date>> ackQueue = new Vector();
@@ -73,7 +72,7 @@ public class Comunication implements SerialPortDataListener {
                         if (outputMessage.isAck())
                             break; // If output packet is ack, we are not waiting for ack replay from MCU
 
-                        SerialCommPacket ackMessage = getAckMessage(ACK_RETRANSMIT_WAIT_TIME);// wait time
+                        SerialCommPacket ackMessage = getAckMessage(getAckRetransmitWaitTime());// wait time
                         if (ackMessage != null) break;
                         if (i < MAX_NUM_OF_RETRANSMISSION)
                             Singleton.logElevator.warning("Tx: No Ack received resending: " + i + "/" + MAX_NUM_OF_RETRANSMISSION);
@@ -128,6 +127,10 @@ public class Comunication implements SerialPortDataListener {
         }
 
 
+    }
+
+    private int getAckRetransmitWaitTime() {
+        return 5 + (int)((8000.0/(float)Singleton.getInstance().settings.NEW_BAUD_RATE) * 18.0);
     }
 
     public Comunication(EventBus eventBus) {

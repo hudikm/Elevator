@@ -38,7 +38,7 @@ public class MainApp extends Application {
     public static final String ELEVATORLOG_TXT = "./elevator.txt";
     public static final String SERIALLOG_TXT = "./serial.txt";
     private Comunication comunication;
-    private final String version = "0.3.5";
+    private final String version = "0.4.0";
     private final String PORTREFRESH = "refresh ...";
     private Stage helpStage = null;
     private Stage sysLogStage = null;

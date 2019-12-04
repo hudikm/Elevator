@@ -109,7 +109,7 @@ public class CabineUI extends UI implements Element.UI {
             }
 
             this.group.setLayoutY(380.0 + this.cabin.getPositionRelative() * -380.0);
-            positionLbl.setText("Cabine position: " + String.valueOf(this.cabin.getPosition()));
+            positionLbl.setText("Cabin position: " + String.valueOf(this.cabin.getPosition()));
         });
     }
 }
